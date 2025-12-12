@@ -10,13 +10,15 @@ interface MegaPantrySelectorProps {
     onToggleIngredient: (id: string) => void;
     scenario: ScenarioId | null;
     onBack: () => void;
+    dietaryPreferences: string[];
 }
 
 export function MegaPantrySelector({
     selectedIngredients,
     onToggleIngredient,
     scenario,
-    onBack
+    onBack,
+    dietaryPreferences
 }: MegaPantrySelectorProps) {
     const { t, language } = useLanguage();
     const [activeCategory, setActiveCategory] = useState<CategoryId | null>(null);
@@ -263,26 +265,35 @@ export function MegaPantrySelector({
                                                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
                                                     {catIngredients.map((ing) => {
                                                         const isSelected = selectedIngredients.includes(ing.id);
+                                                        const isAlcohol = ing.category === 'alcohol';
+                                                        const isAlcoholFreeMode = dietaryPreferences.includes('alcohol_free');
+                                                        const isDisabled = isAlcohol && isAlcoholFreeMode;
+
                                                         return (
                                                             <button
                                                                 key={ing.id}
-                                                                onClick={() => onToggleIngredient(ing.id)}
+                                                                onClick={() => !isDisabled && onToggleIngredient(ing.id)}
+                                                                disabled={isDisabled}
                                                                 className={`
                                                                 relative group flex flex-col items-center p-3 rounded-xl transition-all duration-200
-                                                                ${isSelected
-                                                                        ? 'bg-primary/10 border-2 border-primary shadow-lg shadow-primary/20'
-                                                                        : 'bg-surface border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 hover:bg-black/5 dark:hover:bg-white/5'
+                                                                ${isDisabled
+                                                                        ? 'opacity-40 cursor-not-allowed bg-black/5 dark:bg-white/5 grayscale'
+                                                                        : isSelected
+                                                                            ? 'bg-primary/10 border-2 border-primary shadow-lg shadow-primary/20'
+                                                                            : 'bg-surface border border-black/5 dark:border-white/5 hover:border-black/20 dark:hover:border-white/20 hover:bg-black/5 dark:hover:bg-white/5'
                                                                     }
                                                             `}
                                                             >
                                                                 {/* Placeholder Icon/Image */}
                                                                 <div className={`
                                                                 w-12 h-12 rounded-full flex items-center justify-center mb-2 transition-colors
-                                                                ${isSelected ? 'bg-primary text-white' : 'bg-black/5 dark:bg-white/5 text-text/40 group-hover:bg-black/10 dark:group-hover:bg-white/10 group-hover:text-text'}
+                                                                ${isDisabled
+                                                                        ? 'bg-black/10 text-text/20'
+                                                                        : isSelected ? 'bg-primary text-white' : 'bg-black/5 dark:bg-white/5 text-text/40 group-hover:bg-black/10 dark:group-hover:bg-white/10 group-hover:text-text'}
                                                             `}>
-                                                                    {isSelected ? <Check className="w-6 h-6" /> : <Plus className="w-6 h-6" />}
+                                                                    {isDisabled ? <span className="text-xs">🚫</span> : isSelected ? <Check className="w-6 h-6" /> : <Plus className="w-6 h-6" />}
                                                                 </div>
-                                                                <span className={`text-sm font-medium text-center ${isSelected ? 'text-primary' : 'text-text/80'}`}>
+                                                                <span className={`text-sm font-medium text-center ${isDisabled ? 'text-text/40 line-through' : isSelected ? 'text-primary' : 'text-text/80'}`}>
                                                                     {getIngredientName(ing)}
                                                                 </span>
                                                             </button>

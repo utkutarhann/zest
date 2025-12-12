@@ -199,6 +199,7 @@ export function CreateMenuPage() {
                             onToggleIngredient={toggleIngredient}
                             scenario={selectedScenario}
                             onBack={() => setStep('scenario')}
+                            dietaryPreferences={dietaryPreferences}
                         />
 
 

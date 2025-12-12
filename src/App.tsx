@@ -17,6 +17,7 @@ import { HistoryPage } from './pages/HistoryPage';
 import { GoogleAnalytics } from './components/analytics/GoogleAnalytics';
 import { GoogleAds } from './components/analytics/GoogleAds';
 import { BackToTop } from './components/ui/BackToTop';
+import { UserSync } from './components/auth/UserSync';
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -32,6 +33,7 @@ function App() {
           <Router>
             <GoogleAnalytics />
             <GoogleAds />
+            <UserSync />
             <BackToTop />
             <Routes>
               {/* Public Routes */}

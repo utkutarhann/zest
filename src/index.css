@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-background: 255 255 255;
+    /* White */
+    --color-surface: 241 245 249;
+    /* Slate 100 */
+    --color-text: 15 23 42;
+    /* Slate 900 */
+  }
+
+  .dark {
+    --color-background: 15 23 42;
+    /* Slate 900 */
+    --color-surface: 30 41 59;
+    /* Slate 800 */
+    --color-text: 241 245 249;
+    /* Slate 100 */
+  }
+
+  body {
+    @apply bg-background text-text transition-colors duration-300;
+  }
+}
+
+/* Hide Clerk Development Badge */
+.cl-development-badge {
+  display: none !important;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite linear;
+}

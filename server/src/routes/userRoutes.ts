@@ -37,7 +37,8 @@ router.post('/sync', async (req, res) => {
         res.status(200).json({ success: true });
     } catch (err) {
         if (err instanceof z.ZodError) {
-            return res.status(400).json({ error: (err as z.ZodError).errors[0]?.message || 'Invalid input' });
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            return res.status(400).json({ error: (err as any).errors?.[0]?.message || 'Invalid input' });
         }
         console.error('Error syncing user:', err);
         res.status(500).json({ error: 'Internal server error' });

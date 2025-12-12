@@ -83,7 +83,7 @@ export function LandingPage() {
                             className="w-full sm:w-auto px-8 py-4 bg-surface border border-black/5 dark:border-white/10 text-text rounded-2xl font-semibold text-lg hover:bg-surface/80 transition-all flex items-center justify-center space-x-2"
                         >
                             <span>{t('landing.secondaryCta')}</span>
-                            <ArrowDown className="w-5 h-5" />
+                            <ArrowRight className="w-5 h-5" />
                         </button>
                     </motion.div>
                 </div>

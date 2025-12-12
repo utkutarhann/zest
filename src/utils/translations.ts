@@ -64,6 +64,8 @@ export const translations = {
         'create.results.missing_some': '{count} Malzeme Eksik',
         'create.results.chef_tip': 'Şefin Tavsiyesi',
         'create.results.edit': 'Malzemeleri Düzenle',
+        'recipe.back_home': 'Ana Sayfaya Dön',
+        'recipe.selected_ingredients': 'Seçtiğin Malzemeler',
 
         // History
         'history.title': 'Aramalar',
@@ -171,6 +173,8 @@ export const translations = {
         'create.results.missing_some': '{count} Missing Ingredients',
         'create.results.chef_tip': "Chef's Tip",
         'create.results.edit': 'Edit Ingredients',
+        'recipe.back_home': 'Back to Home',
+        'recipe.selected_ingredients': 'Selected Ingredients',
 
         // History
         'history.title': 'Searches',

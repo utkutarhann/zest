@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Clock, Users, ChefHat, Flame, Check, AlertCircle, ExternalLink, Heart, Share2 } from 'lucide-react';
+import { ArrowLeft, Clock, Users, ChefHat, Flame, Check, AlertCircle, ExternalLink, Heart, Share2, Home } from 'lucide-react';
 import bannerCocktail from '../assets/banner-cocktail.jpg';
 import bannerFood from '../assets/banner-food.jpg';
+import { useLanguage } from '../context/LanguageContext';
 
 interface Ingredient {
     name: string;
@@ -31,13 +32,14 @@ interface RecipeDetail {
 export function RecipeDetailPage() {
     const navigate = useNavigate();
     const location = useLocation();
+    const { t } = useLanguage();
     const [activeTab, setActiveTab] = useState<'ingredients' | 'instructions'>('ingredients');
     const [detail, setDetail] = useState<RecipeDetail | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     // Basic info passed from the previous page
-    const { dishName, sourceName, sourceUrl, missingIngredients = [], scenario } = location.state || {};
+    const { dishName, sourceName, sourceUrl, missingIngredients = [], scenario, selectedIngredients = [] } = location.state || {};
 
     // Determine banner image
     const bannerImage = scenario === 'cocktail' ? bannerCocktail : bannerFood;
@@ -82,9 +84,14 @@ export function RecipeDetailPage() {
                         <ArrowLeft className="w-6 h-6" />
                     </button>
                     <h1 className="text-xl font-bold truncate px-4">{dishName}</h1>
-                    <button className="p-2 hover:bg-surface rounded-full transition-colors text-text/40 cursor-not-allowed">
-                        <Heart className="w-6 h-6" />
-                    </button>
+                    <div className="flex gap-2">
+                        <button onClick={() => navigate('/')} className="p-2 hover:bg-surface rounded-full transition-colors text-text/80" title={t('recipe.back_home')}>
+                            <Home className="w-6 h-6" />
+                        </button>
+                        <button className="p-2 hover:bg-surface rounded-full transition-colors text-text/40 cursor-not-allowed">
+                            <Heart className="w-6 h-6" />
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -134,6 +141,25 @@ export function RecipeDetailPage() {
                             </>
                         ) : null}
                     </div>
+
+                    {/* Selected Ingredients Section */}
+                    {selectedIngredients.length > 0 && (
+                        <div className="px-4 mt-6">
+                            <div className="bg-surface/50 border border-white/5 rounded-2xl p-4">
+                                <h3 className="text-sm font-bold text-text/60 mb-3 flex items-center gap-2">
+                                    <Check className="w-4 h-4 text-green-500" />
+                                    {t('recipe.selected_ingredients')}
+                                </h3>
+                                <div className="flex flex-wrap gap-2">
+                                    {selectedIngredients.map((ing: string, idx: number) => (
+                                        <span key={idx} className="px-3 py-1 bg-green-500/10 text-green-500 text-xs font-bold rounded-full border border-green-500/20">
+                                            {ing}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 {/* Content Tabs */}

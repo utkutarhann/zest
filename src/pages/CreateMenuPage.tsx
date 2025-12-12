@@ -318,7 +318,7 @@ export function CreateMenuPage() {
                             {result.recipes.map((recipe, index) => (
                                 <Fragment key={index}>
                                     <motion.div
-                                        onClick={() => navigate(`/recipe/${recipe.dishName.toLowerCase().replace(/ /g, '-')}`, { state: { ...recipe, scenario: selectedScenario } })}
+                                        onClick={() => navigate(`/recipe/${recipe.dishName.toLowerCase().replace(/ /g, '-')}`, { state: { ...recipe, scenario: selectedScenario, selectedIngredients } })}
                                         initial={{ opacity: 0, y: 20 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: index * 0.1 }}

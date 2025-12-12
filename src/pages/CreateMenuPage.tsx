@@ -369,7 +369,7 @@ export function CreateMenuPage() {
                                     {/* Insert Ad every 3 items */}
                                     {(index + 1) % 3 === 0 && (
                                         <div className="col-span-1 md:col-span-2 lg:col-span-3 my-4">
-                                            <GoogleAd slot="" className="w-full h-32" />
+                                            <GoogleAd slot={import.meta.env.VITE_GOOGLE_ADS_SLOT_FEED || ''} className="w-full h-32" />
                                         </div>
                                     )}
                                 </Fragment>

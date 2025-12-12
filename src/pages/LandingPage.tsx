@@ -191,7 +191,7 @@ export function LandingPage() {
 
             {/* Ad Section */}
             <div className="max-w-7xl mx-auto px-4 pb-24 w-full">
-                <GoogleAd slot="" format="horizontal" className="w-full h-32 md:h-40 rounded-2xl overflow-hidden shadow-sm" />
+                <GoogleAd slot={import.meta.env.VITE_GOOGLE_ADS_SLOT_LANDING || ''} format="horizontal" className="w-full h-32 md:h-40 rounded-2xl overflow-hidden shadow-sm" />
             </div>
 
             {/* Footer */}

@@ -18,7 +18,7 @@ export function AdminUsers() {
         const fetchUsers = async () => {
             if (!user) return;
             try {
-                const res = await fetch('http://localhost:3000/api/admin/users', {
+                const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/users`, {
                     headers: {
                         'x-user-id': user.id
                     }
@@ -63,8 +63,8 @@ export function AdminUsers() {
                                     <td className="p-4 font-medium">{u.email}</td>
                                     <td className="p-4">
                                         <span className={`px-2 py-1 rounded-full text-xs font-bold ${u.role === 'admin'
-                                                ? 'bg-purple-500/20 text-purple-400'
-                                                : 'bg-white/10 text-text/60'
+                                            ? 'bg-purple-500/20 text-purple-400'
+                                            : 'bg-white/10 text-text/60'
                                             }`}>
                                             {u.role}
                                         </span>

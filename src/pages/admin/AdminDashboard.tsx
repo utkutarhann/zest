@@ -17,7 +17,7 @@ export function AdminDashboard() {
         const fetchStats = async () => {
             if (!user) return;
             try {
-                const res = await fetch('http://localhost:3000/api/admin/stats', {
+                const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/stats`, {
                     headers: {
                         'x-user-id': user.id
                     }

@@ -1,4 +1,4 @@
-import { ArrowRight, Sparkles, Refrigerator, ChefHat, ArrowDown, Instagram, Twitter, Github } from 'lucide-react';
+import { ArrowRight, Sparkles, Refrigerator, ChefHat, Instagram, Twitter, Github } from 'lucide-react';
 import { SignedIn, SignedOut } from '@clerk/clerk-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';

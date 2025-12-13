@@ -108,6 +108,11 @@ export const translations = {
         'pantry.category.carb': 'Karbonhidrat',
         'pantry.category.drink': 'İçecek',
         'pantry.generate': 'Zestle!',
+
+        // Limits
+        'limit.title': 'Günlük Limit Doldu',
+        'limit.desc': 'Günlük 2 tarif hakkınız doldu. Yarın tekrar bekleriz!',
+        'limit.button': 'Tamam',
     },
     en: {
         // Header
@@ -217,6 +222,11 @@ export const translations = {
         'pantry.category.carb': 'Carb',
         'pantry.category.drink': 'Drink',
         'pantry.generate': 'Zest It!',
+
+        // Limits
+        'limit.title': 'Daily Limit Reached',
+        'limit.desc': 'You have reached your daily limit of 2 recipes. See you tomorrow!',
+        'limit.button': 'Okay',
     }
 } as const;
 

@@ -8,6 +8,8 @@ import { RecipeImage } from '../components/ui/RecipeImage';
 import { GoogleAd } from '../components/ui/GoogleAd';
 import { useLanguage } from '../context/LanguageContext';
 import { historyService } from '../services/historyService';
+import { useUser } from '@clerk/clerk-react';
+import { LimitReachedModal } from '../components/ui/LimitReachedModal';
 import type { ScenarioId } from '../data/scenarios';
 
 type Step = 'scenario' | 'pantry' | 'loading' | 'result';
@@ -30,11 +32,13 @@ interface RecipeResult {
 export function CreateMenuPage() {
     const navigate = useNavigate();
     const { t, language } = useLanguage();
+    const { user } = useUser();
     const [step, setStep] = useState<Step>('scenario');
     const [selectedScenario, setSelectedScenario] = useState<ScenarioId | null>(null);
     const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
     const [dietaryPreferences, setDietaryPreferences] = useState<string[]>([]);
     const [result, setResult] = useState<RecipeResult | null>(null);
+    const [showLimitModal, setShowLimitModal] = useState(false);
 
     const filters = [
         { id: 'vegetarian', label: 'Vejetaryen', icon: '🌿' },
@@ -87,10 +91,11 @@ export function CreateMenuPage() {
         setStep('loading');
 
         try {
-            const response = await fetch('http://localhost:3000/api/recipes/generate', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/recipes/generate`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'x-user-id': user?.id || '',
                 },
                 body: JSON.stringify({
                     scenario: selectedScenario,
@@ -99,6 +104,15 @@ export function CreateMenuPage() {
                     language: language,
                 }),
             });
+
+            if (response.status === 403) {
+                const errorData = await response.json();
+                if (errorData.code === 'LIMIT_REACHED') {
+                    setStep('pantry'); // Go back to pantry view
+                    setShowLimitModal(true);
+                    return;
+                }
+            }
 
             if (!response.ok) {
                 throw new Error('Generation failed');
@@ -388,6 +402,11 @@ export function CreateMenuPage() {
                     </motion.div>
                 )}
             </AnimatePresence>
+
+            <LimitReachedModal
+                isOpen={showLimitModal}
+                onClose={() => setShowLimitModal(false)}
+            />
         </div >
     );
 }

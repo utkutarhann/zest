@@ -18,6 +18,7 @@ import { GoogleAnalytics } from './components/analytics/GoogleAnalytics';
 import { GoogleAds } from './components/analytics/GoogleAds';
 import { BackToTop } from './components/ui/BackToTop';
 import { UserSync } from './components/auth/UserSync';
+import { CookieConsent } from './components/ui/CookieConsent';
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -35,6 +36,7 @@ function App() {
             <GoogleAds />
             <UserSync />
             <BackToTop />
+            <CookieConsent />
             <Routes>
               {/* Public Routes */}
               <Route

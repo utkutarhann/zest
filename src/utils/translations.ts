@@ -114,6 +114,12 @@ export const translations = {
         'limit.title': 'Günlük Limit Doldu',
         'limit.desc': 'Günlük 2 tarif hakkınız doldu. Yarın tekrar bekleriz!',
         'limit.button': 'Tamam',
+
+        // Cookie Consent
+        'cookie.title': 'Çerez Tercihleri',
+        'cookie.desc': 'Size daha iyi bir deneyim sunmak ve trafiğimizi analiz etmek için çerezleri kullanıyoruz.',
+        'cookie.accept': 'Kabul Et',
+        'cookie.decline': 'Reddet',
     },
     en: {
         // Header
@@ -229,6 +235,12 @@ export const translations = {
         'limit.title': 'Daily Limit Reached',
         'limit.desc': 'You have reached your daily limit of 2 recipes. See you tomorrow!',
         'limit.button': 'Okay',
+
+        // Cookie Consent
+        'cookie.title': 'Cookie Preferences',
+        'cookie.desc': 'We use cookies to improve your experience and analyze our traffic.',
+        'cookie.accept': 'Accept',
+        'cookie.decline': 'Decline',
     }
 } as const;
 

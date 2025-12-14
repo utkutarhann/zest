@@ -55,6 +55,7 @@ export function CookieProvider({ children }: { children: React.ReactNode }) {
         setConsent(consentWithTimestamp);
         localStorage.setItem('cookieConsent', JSON.stringify(consentWithTimestamp));
         setShowBanner(false);
+        setShowModal(false);
     };
 
     const acceptAll = () => {

@@ -6,8 +6,7 @@ import { useCookieConsent, defaultConsent, type CookieConsentState } from '../..
 
 export function CookieConsent() {
     const { t } = useLanguage();
-    const { showBanner, acceptAll, rejectAll, saveConsent, consent } = useCookieConsent();
-    const [showModal, setShowModal] = useState(false);
+    const { showBanner, acceptAll, rejectAll, saveConsent, consent, showModal, setShowModal } = useCookieConsent();
 
     // Local state for the modal toggles
     const [preferences, setPreferences] = useState<CookieConsentState>(defaultConsent);

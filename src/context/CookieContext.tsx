@@ -14,6 +14,8 @@ interface CookieContextType {
     rejectAll: () => void; // Rejects optional cookies
     showBanner: boolean;
     setShowBanner: (show: boolean) => void;
+    showModal: boolean;
+    setShowModal: (show: boolean) => void;
 }
 
 const CookieContext = createContext<CookieContextType | undefined>(undefined);
@@ -27,6 +29,7 @@ export const defaultConsent: CookieConsentState = {
 export function CookieProvider({ children }: { children: React.ReactNode }) {
     const [consent, setConsent] = useState<CookieConsentState | null>(null);
     const [showBanner, setShowBanner] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         const storedConsent = localStorage.getItem('cookieConsent');
@@ -71,7 +74,7 @@ export function CookieProvider({ children }: { children: React.ReactNode }) {
     };
 
     return (
-        <CookieContext.Provider value={{ consent, saveConsent, acceptAll, rejectAll, showBanner, setShowBanner }}>
+        <CookieContext.Provider value={{ consent, saveConsent, acceptAll, rejectAll, showBanner, setShowBanner, showModal, setShowModal }}>
             {children}
         </CookieContext.Provider>
     );

@@ -87,6 +87,7 @@ export const translations = {
         'pantry.clear': 'Aramayı Temizle',
         'pantry.mobile.view_list': 'Listeyi Gör',
         'pantry.mobile.selected': '{count} Malzeme Seçili',
+        'pantry.custom.placeholder': 'Listede yok mu? Elle ekle...',
 
         // Auth
         'auth.google': 'Google ile Devam Et',
@@ -201,6 +202,7 @@ export const translations = {
         'pantry.clear': 'Clear Search',
         'pantry.mobile.view_list': 'View List',
         'pantry.mobile.selected': '{count} Selected',
+        'pantry.custom.placeholder': 'Not in list? Add manually...',
 
         // Auth
         'auth.google': 'Continue with Google',

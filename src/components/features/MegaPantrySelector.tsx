@@ -79,7 +79,7 @@ export function MegaPantrySelector({
         baseIngredients.push({
             id: customId,
             name: customIngredient,
-            category: 'other', // Default category
+            category: 'pantry_essentials', // Default category
             name_en: customIngredient
         });
         onToggleIngredient(customId);

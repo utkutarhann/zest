@@ -47,6 +47,30 @@ Aşağıdaki yapıda bir JSON objesi döndür:
 2. "missingIngredients" hesaplarken kullanıcının verdiği listeyi baz al. Tuz, karabiber, yağ, su gibi temel malzemeleri "eksik" sayma (bunlar evde var varsayılır).
 3. En az 6, en fazla 9 öneri sun.
 4. Kaynaklar Türk yemek siteleri olsun (Nefis Yemek Tarifleri, Yemek.com, Lezzet, Mynet Yemek vb.).
+
+EKSTRA ANALİZ (Smart Suggestions):
+- "contextualSuggestions": Kullanıcının elindeki malzemelere 1-2 kritik malzeme daha ekleyerek yapabileceği ÇOK POPÜLER bir yemek varsa öner. (Örn: "Eğer Krema eklersen Kremalı Mantarlı Makarna yapabilirsin"). Yoksa boş dizi döndür.
+- "alternativeIngredients": Eğer tarif için kritik bir malzeme eksikse ve kullanıcının elinde bunun yerine geçebilecek bir şey varsa (veya evde bulunması kolaysa) öner. (Örn: "Taze domates yoksa konserve domates kullanabilirsin").
+
+ÇIKTI FORMATI GÜNCELLEMESİ (JSON):
+{
+  "recipes": [...],
+  "chefTip": "...",
+  "contextualSuggestions": [
+    {
+      "missingIngredient": "Krema",
+      "suggestedDish": "Kremalı Mantarlı Makarna",
+      "reason": "Elinizdeki mantar ve makarna ile harika gider."
+    }
+  ],
+  "alternativeIngredients": [
+    {
+      "missing": "Taze Fesleğen",
+      "substitute": "Kuru Fesleğen veya Nane",
+      "usage": "Sosu tatlandırmak için kullanabilirsin."
+    }
+  ]
+}
 `;
 
 export const generateRecipe = async (

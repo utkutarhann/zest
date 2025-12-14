@@ -27,6 +27,16 @@ export interface Recipe {
 interface RecipeResult {
     recipes: Recipe[];
     chefTip?: string;
+    contextualSuggestions?: {
+        missingIngredient: string;
+        suggestedDish: string;
+        reason: string;
+    }[];
+    alternativeIngredients?: {
+        missing: string;
+        substitute: string;
+        usage: string;
+    }[];
 }
 
 export function CreateMenuPage() {
@@ -310,7 +320,7 @@ export function CreateMenuPage() {
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                className="mb-12 bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/20 rounded-2xl p-6 relative overflow-hidden"
+                                className="mb-8 bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/20 rounded-2xl p-6 relative overflow-hidden"
                             >
                                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-secondary" />
                                 <div className="flex items-start gap-4 relative z-10">
@@ -327,6 +337,68 @@ export function CreateMenuPage() {
                                     </div>
                                 </div>
                             </motion.div>
+                        )}
+
+                        {/* Smart Suggestions Section */}
+                        {(result.contextualSuggestions?.length || 0) > 0 && (
+                            <div className="mb-12 grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {result.contextualSuggestions?.map((suggestion, idx) => (
+                                    <motion.div
+                                        key={idx}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: 0.1 * idx }}
+                                        className="bg-surface border border-amber-500/20 rounded-2xl p-5 relative overflow-hidden group hover:border-amber-500/40 transition-colors"
+                                    >
+                                        <div className="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
+                                            <span className="text-4xl">🔓</span>
+                                        </div>
+                                        <div className="flex items-start gap-4">
+                                            <div className="w-10 h-10 bg-amber-500/10 rounded-xl flex items-center justify-center shrink-0 text-amber-500">
+                                                <span className="text-xl">💡</span>
+                                            </div>
+                                            <div>
+                                                <h4 className="font-bold text-text mb-1">
+                                                    {suggestion.missingIngredient} ekle, {suggestion.suggestedDish} yap!
+                                                </h4>
+                                                <p className="text-sm text-text/60 leading-relaxed">
+                                                    {suggestion.reason}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        )}
+
+                        {/* Alternative Ingredients Section */}
+                        {(result.alternativeIngredients?.length || 0) > 0 && (
+                            <div className="mb-12">
+                                <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
+                                    <span className="text-xl">🔄</span>
+                                    Akıllı Değişimler
+                                </h3>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                    {result.alternativeIngredients?.map((alt, idx) => (
+                                        <motion.div
+                                            key={idx}
+                                            initial={{ opacity: 0, scale: 0.95 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            transition={{ delay: 0.2 + (0.1 * idx) }}
+                                            className="bg-surface border border-blue-500/20 rounded-xl p-4 hover:bg-blue-500/5 transition-colors"
+                                        >
+                                            <div className="flex items-center gap-2 mb-2 text-sm font-medium">
+                                                <span className="text-red-400 line-through decoration-red-400/50">{alt.missing}</span>
+                                                <ArrowRight className="w-4 h-4 text-text/40" />
+                                                <span className="text-blue-500">{alt.substitute}</span>
+                                            </div>
+                                            <p className="text-xs text-text/60">
+                                                {alt.usage}
+                                            </p>
+                                        </motion.div>
+                                    ))}
+                                </div>
+                            </div>
                         )}
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

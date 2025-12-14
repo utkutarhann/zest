@@ -252,28 +252,30 @@ export function CreateMenuPage() {
 
 
 
-                        {/* Sticky Generate Button */}
-                        <div className="fixed bottom-0 left-0 right-0 p-4 bg-surface/80 backdrop-blur-xl border-t border-black/5 dark:border-white/5 z-50">
-                            <div className="max-w-4xl mx-auto flex justify-center">
-                                <button
-                                    onClick={handleGenerate}
-                                    disabled={selectedIngredients.length === 0}
-                                    className="
-                                        w-full md:w-auto px-8 py-4 bg-primary text-white rounded-2xl font-bold text-lg
-                                        hover:bg-primary/90 transition-all hover:scale-105 active:scale-95
-                                        disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100
-                                        flex items-center justify-center space-x-3 shadow-lg shadow-primary/25
-                                    "
-                                >
-                                    <span>{t('create.generate')}</span>
-                                    {selectedIngredients.length > 0 && (
-                                        <span className="bg-white/20 px-2 py-0.5 rounded-full text-sm">
-                                            {selectedIngredients.length}
-                                        </span>
-                                    )}
-                                    <ArrowRight className="w-5 h-5" />
-                                </button>
-                            </div>
+                        {/* Floating CTA Button */}
+                        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-sm px-4 md:px-0">
+                            <button
+                                onClick={handleGenerate}
+                                disabled={selectedIngredients.length === 0}
+                                className={`
+                                    group relative w-full px-8 py-4 
+                                    bg-gradient-to-r from-orange-500 to-red-600 
+                                    text-white rounded-full font-bold text-xl
+                                    shadow-lg shadow-orange-500/40
+                                    hover:shadow-orange-500/60 hover:scale-105 hover:-translate-y-1
+                                    transition-all duration-300 ease-out
+                                    disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none disabled:hover:translate-y-0
+                                    flex items-center justify-center space-x-3
+                                `}
+                            >
+                                <span className="relative z-10 text-shadow-sm">{t('create.generate')}</span>
+                                {selectedIngredients.length > 0 && (
+                                    <span className="bg-white/20 px-3 py-1 rounded-full text-sm font-semibold backdrop-blur-md">
+                                        {selectedIngredients.length}
+                                    </span>
+                                )}
+                                <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+                            </button>
                         </div>
                     </motion.div>
                 )}

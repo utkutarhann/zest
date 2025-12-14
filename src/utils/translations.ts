@@ -111,9 +111,9 @@ export const translations = {
         'pantry.generate': 'Zestle!',
 
         // Limits
-        'limit.title': 'Günlük Limit Doldu',
-        'limit.desc': 'Günlük 2 tarif hakkınız doldu. Yarın tekrar bekleriz!',
-        'limit.button': 'Tamam',
+        'limit.title': 'Mutfak Biraz Dinleniyor 👨‍🍳',
+        'limit.desc': 'Bugünlük 2 tarif hakkını doldurdun. Yarın taptaze önerilerle seni bekliyor olacağız!',
+        'limit.button': 'Yarın Görüşürüz',
 
         // Cookie Consent
         'cookie.title': 'Çerezleri Kullanıyoruz',
@@ -131,6 +131,23 @@ export const translations = {
         'cookie.cat.analytics.desc': 'Site kullanımını analiz ederek performansı iyileştirmemize yardımcı olur.',
         'cookie.cat.marketing.title': 'Pazarlama Çerezleri',
         'cookie.cat.marketing.desc': 'İlgi alanlarınıza uygun içerik ve reklamlar sunmamıza yardımcı olur.',
+
+        // Fun Facts
+        'fact.tomato': 'Domatesin aslında bir meyve olduğunu biliyor muydun? 🍅',
+        'fact.zest': 'Zest senin için binlerce tarifi tarıyor... 🤖',
+        'fact.saffron': 'Dünyanın en pahalı baharatı safrandır. 💰',
+        'fact.magic': 'Elindeki malzemelerle harikalar yaratabilirsin! ✨',
+        'fact.honey': 'Bal asla bozulmayan tek yiyecektir. 🍯',
+        'fact.carrot': 'Havuçlar eskiden mor renkteydi! 🥕',
+        'fact.banana': 'Muzlar aslında birer bitkidir, ağaç değil. 🍌',
+        'fact.avocado': 'Avokadoların teknik olarak büyük birer meyve olduğunu biliyor muydun? 🥑',
+        'fact.apple': 'Elmalar suda yüzer, çünkü %25\'i havadan oluşur! 🍎',
+        'fact.chocolate': 'Eskiden kakao çekirdekleri para birimi olarak kullanılırdı. 🍫',
+        'fact.peanut': 'Yer fıstığı aslında fındık değil, baklagildir. 🥜',
+        'fact.coffee': 'Kahve çekirdekleri aslında bir meyvenin çekirdeğidir. ☕',
+        'fact.pineapple': 'Ananasın olgunlaşması 3 yıl sürebilir! 🍍',
+        'fact.strawberry': 'Çilek, tohumları meyvenin dışında olan tek meyvedir. 🍓',
+        'fact.cucumber': 'Salatalığın %96\'sı sudur! 🥒',
     },
     en: {
         // Header
@@ -243,9 +260,9 @@ export const translations = {
         'pantry.generate': 'Zest It!',
 
         // Limits
-        'limit.title': 'Daily Limit Reached',
-        'limit.desc': 'You have reached your daily limit of 2 recipes. See you tomorrow!',
-        'limit.button': 'Okay',
+        'limit.title': 'The Kitchen is Resting 👨‍🍳',
+        'limit.desc': 'You have reached your daily limit of 2 recipes. We will be waiting for you tomorrow with fresh suggestions!',
+        'limit.button': 'See You Tomorrow',
 
         // Cookie Consent
         'cookie.title': 'We Use Cookies',
@@ -263,7 +280,24 @@ export const translations = {
         'cookie.cat.analytics.desc': 'Help us improve performance by analyzing site usage.',
         'cookie.cat.marketing.title': 'Marketing Cookies',
         'cookie.cat.marketing.desc': 'Help us deliver content and ads relevant to your interests.',
-    }
+
+        // Fun Facts
+        'fact.tomato': 'Did you know that a tomato is actually a fruit? 🍅',
+        'fact.zest': 'Zest is scanning thousands of recipes for you... 🤖',
+        'fact.saffron': 'Saffron is the most expensive spice in the world. 💰',
+        'fact.magic': 'You can create wonders with what you have! ✨',
+        'fact.honey': 'Honey is the only food that never spoils. 🍯',
+        'fact.carrot': 'Carrots used to be purple! 🥕',
+        'fact.banana': 'Bananas are actually herbs, not trees. 🍌',
+        'fact.avocado': 'Did you know that avocados are technically large berries? 🥑',
+        'fact.apple': 'Apples float in water because they are 25% air! 🍎',
+        'fact.chocolate': 'Cacao beans were once used as currency. 🍫',
+        'fact.peanut': 'Peanuts are strictly legumes, not nuts. 🥜',
+        'fact.coffee': 'Coffee beans are actually the pits of a fruit. ☕',
+        'fact.pineapple': 'A pineapple can take up to 3 years to grow! 🍍',
+        'fact.strawberry': 'Strawberries are the only fruit with seeds on the outside. 🍓',
+        'fact.cucumber': 'Cucumbers are 96% water! 🥒',
+    },
 } as const;
 
 export type TranslationKey = keyof typeof translations.tr;

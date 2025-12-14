@@ -77,27 +77,51 @@ export function CreateMenuPage() {
     };
 
     const [loadingFactIndex, setLoadingFactIndex] = useState(0);
-
-    const funFacts = [
-        "Domatesin aslında bir meyve olduğunu biliyor muydun? 🍅",
-        "Zest senin için binlerce tarifi tarıyor... 🤖",
-        "Dünyanın en pahalı baharatı safrandır. 💰",
-        "Elindeki malzemelerle harikalar yaratabilirsin! ✨",
-        "Bal asla bozulmayan tek yiyecektir. 🍯",
-        "Havuçlar eskiden mor renkteydi! 🥕",
-        "Muzlar aslında birer bitkidir, ağaç değil. 🍌"
-    ];
+    const [randomFacts, setRandomFacts] = useState<string[]>([]);
 
     useEffect(() => {
         if (step === 'loading') {
+            const keys = [
+                'fact.tomato', 'fact.zest', 'fact.saffron', 'fact.magic',
+                'fact.honey', 'fact.carrot', 'fact.banana', 'fact.avocado',
+                'fact.apple', 'fact.chocolate', 'fact.peanut', 'fact.coffee',
+                'fact.pineapple', 'fact.strawberry', 'fact.cucumber'
+            ] as const;
+
+            // Fisher-Yates shuffle
+            const shuffled = [...keys];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+
+            setRandomFacts(shuffled.map(key => t(key)));
+
             const interval = setInterval(() => {
-                setLoadingFactIndex(prev => (prev + 1) % funFacts.length);
+                setLoadingFactIndex(prev => (prev + 1) % keys.length);
             }, 3000);
             return () => clearInterval(interval);
         }
-    }, [step]);
+    }, [step, t]);
 
     const handleGenerate = async () => {
+        if (!user?.id) return;
+
+        try {
+            // Check usage limit first
+            const usageResponse = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/users/${user.id}/usage`);
+            if (usageResponse.ok) {
+                const usageData = await usageResponse.json();
+                if (usageData.isLimitReached) {
+                    setShowLimitModal(true);
+                    return;
+                }
+            }
+        } catch (error) {
+            console.error('Usage check failed:', error);
+            // Continue to generation even if check fails, let backend handle it
+        }
+
         setStep('loading');
 
         try {
@@ -279,7 +303,7 @@ export function CreateMenuPage() {
                                     exit={{ opacity: 0, y: -10 }}
                                     className="text-xl font-medium text-text"
                                 >
-                                    {funFacts[loadingFactIndex]}
+                                    {randomFacts[loadingFactIndex]}
                                 </motion.p>
                             </AnimatePresence>
                         </div>

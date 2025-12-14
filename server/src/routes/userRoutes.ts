@@ -45,4 +45,43 @@ router.post('/sync', async (req, res) => {
     }
 });
 
+// Check User Usage Endpoint
+router.get('/:id/usage', async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        if (!id) {
+            return res.status(400).json({ error: 'User ID is required' });
+        }
+
+        const result = await query('SELECT daily_usage_count, last_usage_date FROM users WHERE id = $1', [id]);
+
+        if (result.rows.length === 0) {
+            // User doesn't exist yet, so they have 0 usage
+            return res.json({ usageCount: 0, limit: 2, isLimitReached: false });
+        }
+
+        const user = result.rows[0];
+        const today = new Date().toISOString().split('T')[0];
+        const lastUsage = user.last_usage_date ? new Date(user.last_usage_date).toISOString().split('T')[0] : null;
+
+        let currentCount = user.daily_usage_count;
+
+        // Reset if it's a new day
+        if (lastUsage !== today) {
+            currentCount = 0;
+        }
+
+        res.json({
+            usageCount: currentCount,
+            limit: 2,
+            isLimitReached: currentCount >= 2
+        });
+
+    } catch (err) {
+        console.error('Error fetching user usage:', err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 export default router;

@@ -184,7 +184,10 @@ export const generateRecipeDetail = async (dishName: string, language: 'tr' | 'e
   });
 
   const content = completion.choices[0].message.content;
-  if (!content) throw new Error('No content generated');
+  if (!content) {
+    console.error("OpenAI returned no content");
+    throw new Error('No content generated');
+  }
 
   try {
     const result = JSON.parse(content);
@@ -192,7 +195,8 @@ export const generateRecipeDetail = async (dishName: string, language: 'tr' | 'e
     detailCache.set(cacheKey, result);
     return result;
   } catch (e) {
-    console.error("Failed to parse AI response:", content);
+    console.error("Failed to parse AI response. Raw content:", content);
+    console.error("Parse Error:", e);
     throw new Error("Invalid JSON response from AI");
   }
 };

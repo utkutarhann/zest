@@ -10,6 +10,7 @@ import { RecipeDetailPage } from './pages/RecipeDetailPage';
 import { AboutPage } from './pages/AboutPage';
 import { ThemeProvider } from './context/ThemeContext';
 import { LanguageProvider } from './context/LanguageContext';
+import { CookieProvider } from './context/CookieContext';
 import { AdminLayout } from './layouts/AdminLayout';
 import { AdminDashboard } from './pages/admin/AdminDashboard';
 import { AdminUsers } from './pages/admin/AdminUsers';
@@ -31,96 +32,98 @@ function App() {
     <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
       <ThemeProvider>
         <LanguageProvider>
-          <Router>
-            <GoogleAnalytics />
-            <GoogleAds />
-            <UserSync />
-            <BackToTop />
-            <CookieConsent />
-            <Routes>
-              {/* Public Routes */}
-              <Route
-                path="/"
-                element={
-                  <>
-                    <SignedIn>
-                      <Layout>
+          <CookieProvider>
+            <Router>
+              <GoogleAnalytics />
+              <GoogleAds />
+              <UserSync />
+              <BackToTop />
+              <CookieConsent />
+              <Routes>
+                {/* Public Routes */}
+                <Route
+                  path="/"
+                  element={
+                    <>
+                      <SignedIn>
+                        <Layout>
+                          <LandingPage />
+                        </Layout>
+                      </SignedIn>
+                      <SignedOut>
                         <LandingPage />
-                      </Layout>
-                    </SignedIn>
-                    <SignedOut>
-                      <LandingPage />
-                    </SignedOut>
-                  </>
-                }
-              />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/signup" element={<SignUpPage />} />
-              <Route path="/about" element={<AboutPage />} />
+                      </SignedOut>
+                    </>
+                  }
+                />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/signup" element={<SignUpPage />} />
+                <Route path="/about" element={<AboutPage />} />
 
-              {/* Protected Routes */}
-              <Route
-                path="/create"
-                element={
-                  <>
-                    <SignedIn>
-                      <Layout>
-                        <CreateMenuPage />
-                      </Layout>
-                    </SignedIn>
-                    <SignedOut>
-                      <RedirectToSignIn />
-                    </SignedOut>
-                  </>
-                }
-              />
-              <Route
-                path="/recipe/:slug"
-                element={
-                  <>
-                    <SignedIn>
-                      <Layout>
-                        <RecipeDetailPage />
-                      </Layout>
-                    </SignedIn>
-                    <SignedOut>
-                      <RedirectToSignIn />
-                    </SignedOut>
-                  </>
-                }
-              />
-              <Route
-                path="/history"
-                element={
-                  <>
-                    <SignedIn>
-                      <Layout>
-                        <HistoryPage />
-                      </Layout>
-                    </SignedIn>
-                    <SignedOut>
-                      <RedirectToSignIn />
-                    </SignedOut>
-                  </>
-                }
-              />
+                {/* Protected Routes */}
+                <Route
+                  path="/create"
+                  element={
+                    <>
+                      <SignedIn>
+                        <Layout>
+                          <CreateMenuPage />
+                        </Layout>
+                      </SignedIn>
+                      <SignedOut>
+                        <RedirectToSignIn />
+                      </SignedOut>
+                    </>
+                  }
+                />
+                <Route
+                  path="/recipe/:slug"
+                  element={
+                    <>
+                      <SignedIn>
+                        <Layout>
+                          <RecipeDetailPage />
+                        </Layout>
+                      </SignedIn>
+                      <SignedOut>
+                        <RedirectToSignIn />
+                      </SignedOut>
+                    </>
+                  }
+                />
+                <Route
+                  path="/history"
+                  element={
+                    <>
+                      <SignedIn>
+                        <Layout>
+                          <HistoryPage />
+                        </Layout>
+                      </SignedIn>
+                      <SignedOut>
+                        <RedirectToSignIn />
+                      </SignedOut>
+                    </>
+                  }
+                />
 
-              {/* Admin Routes */}
-              <Route
-                path="/admin"
-                element={
-                  <SignedIn>
-                    <AdminLayout />
-                  </SignedIn>
-                }
-              >
-                <Route index element={<AdminDashboard />} />
-                <Route path="users" element={<AdminUsers />} />
-              </Route>
+                {/* Admin Routes */}
+                <Route
+                  path="/admin"
+                  element={
+                    <SignedIn>
+                      <AdminLayout />
+                    </SignedIn>
+                  }
+                >
+                  <Route index element={<AdminDashboard />} />
+                  <Route path="users" element={<AdminUsers />} />
+                </Route>
 
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </Router>
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </Router>
+          </CookieProvider>
         </LanguageProvider>
       </ThemeProvider>
     </ClerkProvider>

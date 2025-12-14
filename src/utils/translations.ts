@@ -116,10 +116,21 @@ export const translations = {
         'limit.button': 'Tamam',
 
         // Cookie Consent
-        'cookie.title': 'Çerez Tercihleri',
-        'cookie.desc': 'Size daha iyi bir deneyim sunmak ve trafiğimizi analiz etmek için çerezleri kullanıyoruz.',
-        'cookie.accept': 'Kabul Et',
-        'cookie.decline': 'Reddet',
+        'cookie.title': 'Çerezleri Kullanıyoruz',
+        'cookie.desc': 'Web sitemizde, deneyiminizi iyileştirmek ve hizmetlerimizi geliştirmek için çerezler kullanıyoruz. Zorunlu çerezler her zaman aktiftir. Diğer çerezler için tercihinizi seçebilirsiniz.',
+        'cookie.accept_all': 'Tümünü Kabul Et',
+        'cookie.reject_all': 'Sadece Zorunlu Çerezler',
+        'cookie.manage': 'Tercihleri Yönet',
+        'cookie.save': 'Tercihleri Kaydet',
+        'cookie.policy': 'Çerez Politikası',
+        'cookie.privacy': 'Gizlilik Politikası',
+
+        'cookie.cat.essential.title': 'Zorunlu Çerezler',
+        'cookie.cat.essential.desc': 'Web sitesinin düzgün çalışması için gereklidir. Bu çerezler kapatılamaz.',
+        'cookie.cat.analytics.title': 'Analitik Çerezler',
+        'cookie.cat.analytics.desc': 'Site kullanımını analiz ederek performansı iyileştirmemize yardımcı olur.',
+        'cookie.cat.marketing.title': 'Pazarlama Çerezleri',
+        'cookie.cat.marketing.desc': 'İlgi alanlarınıza uygun içerik ve reklamlar sunmamıza yardımcı olur.',
     },
     en: {
         // Header
@@ -237,10 +248,21 @@ export const translations = {
         'limit.button': 'Okay',
 
         // Cookie Consent
-        'cookie.title': 'Cookie Preferences',
-        'cookie.desc': 'We use cookies to improve your experience and analyze our traffic.',
-        'cookie.accept': 'Accept',
-        'cookie.decline': 'Decline',
+        'cookie.title': 'We Use Cookies',
+        'cookie.desc': 'We use cookies to improve your experience and enhance our services. Essential cookies are always active. You can choose your preference for other cookies.',
+        'cookie.accept_all': 'Accept All',
+        'cookie.reject_all': 'Essential Only',
+        'cookie.manage': 'Manage Preferences',
+        'cookie.save': 'Save Preferences',
+        'cookie.policy': 'Cookie Policy',
+        'cookie.privacy': 'Privacy Policy',
+
+        'cookie.cat.essential.title': 'Essential Cookies',
+        'cookie.cat.essential.desc': 'Necessary for the website to function properly. These cannot be disabled.',
+        'cookie.cat.analytics.title': 'Analytics Cookies',
+        'cookie.cat.analytics.desc': 'Help us improve performance by analyzing site usage.',
+        'cookie.cat.marketing.title': 'Marketing Cookies',
+        'cookie.cat.marketing.desc': 'Help us deliver content and ads relevant to your interests.',
     }
 } as const;
 

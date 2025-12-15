@@ -43,12 +43,17 @@ export function CreateMenuPage() {
     const navigate = useNavigate();
     const { t, language } = useLanguage();
     const { user } = useUser();
+
+    // State
     const [step, setStep] = useState<Step>('scenario');
     const [selectedScenario, setSelectedScenario] = useState<ScenarioId | null>(null);
     const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
     const [dietaryPreferences, setDietaryPreferences] = useState<string[]>([]);
     const [result, setResult] = useState<RecipeResult | null>(null);
     const [showLimitModal, setShowLimitModal] = useState(false);
+    const [usageStats, setUsageStats] = useState({ count: 0, limit: 2 });
+    const [loadingFactIndex, setLoadingFactIndex] = useState(0);
+    const [randomFacts, setRandomFacts] = useState<string[]>([]);
 
     const filters = [
         { id: 'vegetarian', label: 'Vejetaryen', icon: '🌿' },
@@ -76,9 +81,21 @@ export function CreateMenuPage() {
         );
     };
 
-    const [loadingFactIndex, setLoadingFactIndex] = useState(0);
-    const [randomFacts, setRandomFacts] = useState<string[]>([]);
+    // Fetch usage stats on mount
+    useEffect(() => {
+        if (!user?.id) return;
 
+        fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/api/users/${user.id}/usage`)
+            .then(res => res.json())
+            .then(data => {
+                if (data) {
+                    setUsageStats({ count: data.usageCount, limit: data.limit });
+                }
+            })
+            .catch(err => console.error('Failed to fetch usage:', err));
+    }, [user?.id]);
+
+    // Loading Facts Logic
     useEffect(() => {
         if (step === 'loading') {
             const keys = [
@@ -253,7 +270,18 @@ export function CreateMenuPage() {
 
 
                         {/* Floating CTA Button */}
-                        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-sm px-4 md:px-0">
+                        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-sm px-4 md:px-0 flex flex-col items-center gap-3">
+                            {/* Limit Badge */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="bg-black/60 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10 text-xs font-medium text-white/80 shadow-lg"
+                            >
+                                {t('limit.display')
+                                    .replace('{current}', (Math.max(0, usageStats.limit - usageStats.count)).toString())
+                                    .replace('{max}', usageStats.limit.toString())}
+                            </motion.div>
+
                             <button
                                 onClick={handleGenerate}
                                 disabled={selectedIngredients.length === 0}

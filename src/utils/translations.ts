@@ -114,6 +114,7 @@ export const translations = {
         'limit.title': 'Mutfak Biraz Dinleniyor 👨‍🍳',
         'limit.desc': 'Bugünlük 2 tarif hakkını doldurdun. Yarın taptaze önerilerle seni bekliyor olacağız!',
         'limit.button': 'Yarın Görüşürüz',
+        'limit.display': 'Günlük Hak: {current}/{max}',
 
         // Cookie Consent
         'cookie.title': 'Çerezleri Kullanıyoruz',
@@ -263,6 +264,7 @@ export const translations = {
         'limit.title': 'The Kitchen is Resting 👨‍🍳',
         'limit.desc': 'You have reached your daily limit of 2 recipes. We will be waiting for you tomorrow with fresh suggestions!',
         'limit.button': 'See You Tomorrow',
+        'limit.display': 'Daily Limit: {current}/{max}',
 
         // Cookie Consent
         'cookie.title': 'We Use Cookies',

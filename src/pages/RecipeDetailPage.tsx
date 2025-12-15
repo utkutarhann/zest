@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Clock, Users, ChefHat, Flame, Check, AlertCircle, ExternalLink, Heart, Share2, Home } from 'lucide-react';
+import { ArrowLeft, Clock, Users, ChefHat, Flame, Check, AlertCircle, ExternalLink, Heart, Share2, Home, Lightbulb } from 'lucide-react';
 import bannerCocktail from '../assets/banner-cocktail.jpg';
 import bannerFood from '../assets/banner-food.jpg';
 import { useLanguage } from '../context/LanguageContext';
+import { ingredients as pantryIngredients } from '../data/pantryData';
 
 interface Ingredient {
     name: string;
@@ -39,10 +40,37 @@ export function RecipeDetailPage() {
     const [error, setError] = useState<string | null>(null);
 
     // Basic info passed from the previous page
-    const { dishName, sourceName, sourceUrl, missingIngredients = [], scenario, selectedIngredients = [] } = location.state || {};
+    const { dishName, sourceName, sourceUrl, scenario, selectedIngredients = [] } = location.state || {};
 
     // Determine banner image
     const bannerImage = scenario === 'cocktail' ? bannerCocktail : bannerFood;
+
+    // Calculate missing ingredients locally based on actual detail data
+    const missingIngredientsList = useMemo(() => {
+        if (!detail) return [];
+
+        // Map selected IDs to names
+        const userIngredientNames = selectedIngredients.map((id: string) => {
+            const found = pantryIngredients.find(pi => pi.id === id);
+            return found ? found.name.toLowerCase() : id.toLowerCase();
+        });
+
+        const staples = ['su', 'tuz', 'karabiber', 'sıvı yağ', 'zeytinyağı', 'şeker', 'sugar', 'salt', 'water', 'pepper', 'oil'];
+
+        return detail.ingredients.filter(ing => {
+            const ingName = ing.name.toLowerCase();
+
+            // Check if user has it
+            const hasIngredient = userIngredientNames.some((uName: string) =>
+                ingName.includes(uName) || uName.includes(ingName)
+            );
+
+            // Check if it's a staple
+            const isStaple = staples.some(s => ingName.includes(s));
+
+            return !hasIngredient && !isStaple;
+        });
+    }, [detail, selectedIngredients]);
 
     useEffect(() => {
         if (!dishName) {
@@ -88,9 +116,6 @@ export function RecipeDetailPage() {
                     <div className="flex gap-2">
                         <button onClick={() => navigate('/')} className="p-2 hover:bg-surface rounded-full transition-colors text-text/80" title={t('recipe.back_home')}>
                             <Home className="w-6 h-6" />
-                        </button>
-                        <button className="p-2 hover:bg-surface rounded-full transition-colors text-text/40 cursor-not-allowed">
-                            <Heart className="w-6 h-6" />
                         </button>
                     </div>
                 </div>
@@ -152,13 +177,47 @@ export function RecipeDetailPage() {
                                     {t('recipe.selected_ingredients')}
                                 </h3>
                                 <div className="flex flex-wrap gap-2">
-                                    {selectedIngredients.map((ing: string, idx: number) => (
-                                        <span key={idx} className="px-3 py-1 bg-green-500/10 text-green-500 text-xs font-bold rounded-full border border-green-500/20">
-                                            {ing}
-                                        </span>
-                                    ))}
+                                    {selectedIngredients.map((id: string) => {
+                                        const ing = pantryIngredients.find(p => p.id === id);
+                                        return (
+                                            <span key={id} className="px-3 py-1 bg-green-500/10 text-green-500 text-xs font-bold rounded-full border border-green-500/20">
+                                                {ing ? ing.name : id}
+                                            </span>
+                                        );
+                                    })}
                                 </div>
                             </div>
+                        </div>
+                    )}
+
+                    {/* Chef's Suggestion / Missing Ingredients Tip */}
+                    {!loading && detail && missingIngredientsList.length > 0 && (
+                        <div className="px-4 mt-6">
+                            <motion.div
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="bg-gradient-to-br from-orange-500/10 to-primary/10 border border-orange-500/20 rounded-2xl p-5"
+                            >
+                                <div className="flex items-start gap-4">
+                                    <div className="p-3 bg-orange-500/20 rounded-full text-orange-500 shrink-0">
+                                        <Lightbulb className="w-6 h-6" />
+                                    </div>
+                                    <div>
+                                        <h3 className="font-bold text-lg text-text mb-1">Şefin Tavsiyesi</h3>
+                                        <p className="text-text/80 text-sm leading-relaxed mb-3">
+                                            Bu tarifi tam lezzetiyle yapabilmek için <strong>{missingIngredientsList.length} malzemeye</strong> daha ihtiyacın var.
+                                            Eğer bunları temin edersen harika bir sonuç alacağına eminim! 👨‍🍳
+                                        </p>
+                                        <div className="flex flex-wrap gap-2">
+                                            {missingIngredientsList.map((ing, idx) => (
+                                                <span key={idx} className="px-2 py-1 bg-surface border border-white/10 rounded-lg text-xs font-medium text-text/60">
+                                                    + {ing.name}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            </motion.div>
                         </div>
                     )}
                 </div>
@@ -228,10 +287,9 @@ export function RecipeDetailPage() {
                                 className="space-y-3"
                             >
                                 {detail.ingredients.map((ing, idx) => {
-                                    const isMissing = missingIngredients.some((m: string) =>
-                                        m.toLowerCase().includes(ing.name.toLowerCase()) ||
-                                        ing.name.toLowerCase().includes(m.toLowerCase())
-                                    );
+                                    // Check if missing using the SAME logic as the summary
+                                    const isMissing = missingIngredientsList.some(m => m.name === ing.name);
+
                                     return (
                                         <div key={idx} className="flex items-center justify-between p-4 bg-surface border border-white/5 rounded-xl hover:border-white/10 transition-colors">
                                             <div className="flex items-center gap-3">
